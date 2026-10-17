@@ -1,0 +1,20 @@
+# Whitelist: ignore everything at the top level, then re-allow only the Claude setup.
+/*
+!/.gitignore
+!/.gitattributes
+!/CLAUDE.md
+!/README.md
+!/bootstrap.ps1
+!/skills-lock.json
+!/.agents/
+!/.claude/
+!/user-claude/
+!/Project/
+
+# .claude: junctions are recreated by bootstrap.ps1; local settings stay local
+/.claude/skills/
+/.claude/settings.local.json
+
+# Project: only the skills repo (it has its own .gitignore for the large pcb-autoroute binaries)
+/Project/*
+!/Project/claude-skills/

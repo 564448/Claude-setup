@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# Large binaries for pcb-autoroute (Freerouting jar + JRE zip, ~117 MB); see tools/README.txt
+skills/project/pcb-autoroute/tools/*
+!skills/project/pcb-autoroute/tools/README.txt

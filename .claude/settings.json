@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -File \"${CLAUDE_PROJECT_DIR}\\.claude\\hooks\\session-reminder.ps1\"",
+            "shell": "powershell"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -File \"${CLAUDE_PROJECT_DIR}\\.claude\\hooks\\language-context.ps1\"",
+            "shell": "powershell"
+          }
+        ]
+      }
+    ]
+  }
+}
