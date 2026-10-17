@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Restores the Claude Code setup from this repo on a new Ubuntu PC. Run from inside the clone
-# (e.g. /home/knight/claude); the work folders are expected in a sibling folder named Knight.
+# (e.g. /home/knight/Claude); the work folders are expected in a sibling folder named Knight.
 # Does not touch credentials: log in to Claude Code and gh yourself.
 #
 #   1. links the self-written skills        (Project/claude-skills/link-skills.sh)
@@ -31,7 +31,11 @@ copy() {
 }
 copy "$root/user-claude/settings.json" "$claude_dir/settings.json"
 copy "$root/user-claude/statusline-command.sh" "$claude_dir/statusline-command.sh"
-for f in "$root"/user-claude/memory/*; do copy "$f" "$mem/$(basename "$f")"; done
+while IFS= read -r f; do
+    rel=${f#"$root"/user-claude/memory/}
+    mkdir -p "$mem/$(dirname "$rel")"
+    copy "$f" "$mem/$rel"
+done < <(find "$root/user-claude/memory" -type f)
 
 python3 - "$claude_dir/settings.json" "$work" <<'PY'
 import json, sys

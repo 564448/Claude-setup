@@ -15,7 +15,7 @@ Turn what the user told you in this session into persistent memories. Every step
 
 ## Layout
 
-All memories live in this project's memory folder (`~/.claude/projects/<project slug>/memory/`; the slug is the working directory path with separators replaced by `-`, e.g. `C--Knight` on Windows or `-home-knight-claude` on Linux).
+All memories live in this project's memory folder (`~/.claude/projects/<project slug>/memory/`; the slug is the working directory path with separators replaced by `-`, e.g. `C--Knight` on Windows or `-home-knight-Claude` on Linux).
 
 ```
 memory/

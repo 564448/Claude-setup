@@ -4,14 +4,14 @@ Personal Claude Code setup for Ubuntu: CLAUDE.md, self-written skills, third-par
 hooks, and user-level settings/memory. Private repo. The Windows setup is on the `main` branch.
 
 ## Restore on a new Ubuntu PC
-Expected layout: Claude runs from `/home/knight/claude` (this repo); the work folders
+Expected layout: Claude runs from `/home/knight/Claude` (this repo); the work folders
 `ClaudeTaughtMe/`, `CS/` and `Project/` sit in `/home/knight/Knight`.
 
 1. Install git, GitHub CLI (`gh`), python3 and Claude Code. Run `gh auth login`.
-2. `git clone -b linux https://github.com/564448/Claude-setup /home/knight/claude`
+2. `git clone -b linux https://github.com/564448/Claude-setup /home/knight/Claude`
 3. Copy your work folders into `/home/knight/Knight`. Skip `Project/claude-skills`: the skills come from this repo.
-4. `bash /home/knight/claude/bootstrap.sh`
-5. Start Claude Code in `/home/knight/claude` and run /login.
+4. `bash /home/knight/Claude/bootstrap.sh`
+5. Start Claude Code in `/home/knight/Claude` and run /login.
 
 (For Claude: just follow these steps and report any error.)
 
