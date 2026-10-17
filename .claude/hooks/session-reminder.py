@@ -9,7 +9,7 @@ print(json.dumps({
         "hookEventName": "SessionStart",
         "additionalContext": (
             "New session started. Before proceeding with any task, confirm with the user whether to work in "
-            f"{setup} (setup) or {work} (or a specific subfolder such as ClaudeTaughtMe, CS, or Project) for this session."
+            f"{setup} (setup) or {work} (or a specific subfolder such as TaughtMe, CS, or Project) for this session."
         ),
     }
 }))

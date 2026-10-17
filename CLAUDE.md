@@ -2,7 +2,7 @@
 
 ## Paths
 - **Setup root**: the folder this repo is cloned to, and where Claude is run from (e.g. `/home/knight/Claude`). Holds `CLAUDE.md`, `.claude/`, `.agents/` and `claude-skills/`.
-- **Work root**: the sibling folder `Knight` (e.g. `/home/knight/Knight`) holding the three work folders `ClaudeTaughtMe/`, `CS/` and `Project/`. `bootstrap.sh` adds it to `permissions.additionalDirectories`.
+- **Work root**: the sibling folder `Knight` (e.g. `/home/knight/Knight`) holding the three work folders `TaughtMe/`, `CS/` and `Project/`. `bootstrap.sh` adds it to `permissions.additionalDirectories`.
 
 The rules below say "setup root" and "work root"; Auto mode covers both.
 
@@ -22,7 +22,7 @@ For either kind, if the task is very complex, you may search GitHub for similar 
 
 The work root is a personal workspace with three top-level folders, categorized by purpose. Store new work in the folder matching its purpose.
 
-- **ClaudeTaughtMe/** — Things the user wants to learn that are *not* related to their academic studies (general knowledge, side curiosities, explanations).
+- **TaughtMe/** — Things the user wants to learn that are *not* related to their academic studies (general knowledge, side curiosities, explanations).
 - **CS/** — Academic coursework. Organized by year level, then by subject (e.g. `CS/CS3/<subject>`).
 - **Project/** — Personal projects (e.g. `Hack4Hope`, `UAV`).
 

@@ -5,7 +5,7 @@ hooks, and user-level settings/memory. Private repo. The Windows setup is on the
 
 ## Restore on a new Ubuntu PC
 Expected layout: Claude runs from `/home/knight/Claude` (this repo); the work folders
-`ClaudeTaughtMe/`, `CS/` and `Project/` sit in `/home/knight/Knight`.
+`TaughtMe/`, `CS/` and `Project/` sit in `/home/knight/Knight`.
 
 1. Install git, GitHub CLI (`gh`), python3 and Claude Code. Run `gh auth login`.
 2. `git clone -b linux https://github.com/564448/Claude-setup /home/knight/Claude`
@@ -22,7 +22,7 @@ Expected layout: Claude runs from `/home/knight/Claude` (this repo); the work fo
 - user-claude/ – copies of ~/.claude settings, statusline and memory
 
 ## Not included
-- Credentials, history, sessions, settings.local.json, and the work folders (CS, Project, ClaudeTaughtMe).
+- Credentials, history, sessions, settings.local.json, and the work folders (CS, Project, TaughtMe).
 - Windows-only tooling kept on `main`: pcb-autoroute, pcb-design, remote_vm_kali, the nkrafa-* agents and /Review_NKRAFA_report.
 - `report-format-check` is included, but its reference report (`CS/รายงานพี่แซ่บ.docx`) must be copied over with your CS folder.
 - `remote-pi-min` needs your SSH key for the Pi in `~/.ssh`.
