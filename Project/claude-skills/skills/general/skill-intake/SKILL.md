@@ -37,8 +37,8 @@ Mechanism step by step, and **when it runs**: on demand by the user, chosen by t
 
 ### A3. Compare with this setup
 Read before judging:
-- `C:\Knight\CLAUDE.md`
-- `C:\Knight\Project\claude-skills\README.md` (index of every skill, agent, command, plugin)
+- `<setup root>/CLAUDE.md`
+- `<setup root>/Project/claude-skills/README.md` (index of every skill, agent, command, plugin)
 - every own skill that could overlap or conflict (e.g. `coding-guidelines`, `root-cause-debugging`, `verification-before-completion`)
 - `~/.claude/settings.json` (`enabledPlugins`) and the facts the target needs (`node --version`, whether the folder is a git repo, …)
 
@@ -65,7 +65,7 @@ If the user already gave an install method in the arguments, skip the question a
 |---|---|
 | MIT or another license that allows modification, and the user wants to own it | Fork into `Project/claude-skills/skills/<bucket>/<name>/` |
 | No license | Ideas only. Write it yourself, copy no text, and say so in the file |
-| `npx skills` | Stays in `C:\Knight\.agents\skills` + `skills-lock.json`. Never move it. Index row only |
+| `npx skills` | Stays in `<setup root>/.agents/skills` + `skills-lock.json`. Never move it. Index row only |
 | Plugin / MCP server | Install where it lives (`/plugin …`, `claude mcp add …`). Index row only |
 | Source-available (e.g. ELv2) | Use it as is. Don't fork |
 
@@ -80,14 +80,14 @@ Follow `Project/claude-skills/CLAUDE.md`.
 ### B3. Register
 - One row in the matching table of `Project/claude-skills/README.md` (Own skills, or Third-party for npx/plugin).
 - For own skills, also an entry in the bucket `README.md` with the longer notes and the fork source.
-- Run `Project/claude-skills/link-skills.ps1` and read its output.
+- Run `Project/claude-skills/link-skills.sh` and read its output.
 - If the fork duplicates an installed plugin, set it to `false` in `enabledPlugins` so it doesn't load twice.
-- Only add to `C:\Knight\CLAUDE.md` if the user asks. Fit it to the existing structure, and name a skill the model can invoke (not one with `disable-model-invocation: true`).
+- Only add to `<setup root>/CLAUDE.md` if the user asks. Fit it to the existing structure, and name a skill the model can invoke (not one with `disable-model-invocation: true`).
 
 ### B4. Verify and summarize
 Run `verification-before-completion`. Typical checks:
 - body diff against upstream (if unchanged)
-- junction in `~/.claude/skills` points to the repo folder
+- symlink in `~/.claude/skills` points to the repo folder
 - exactly one index entry per README
 - the skill appears in the available-skills list (user-invoked skills won't; mark that as unverified and say how to test it)
 - edited files are still UTF-8

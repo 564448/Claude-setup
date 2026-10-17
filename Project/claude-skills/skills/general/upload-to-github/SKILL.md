@@ -97,8 +97,7 @@ Ask the user (don't assume) which applies:
 
 **New repo:**
 - Ask for repo name and visibility (public/private).
-- Check `gh auth status`. If `gh` isn't installed: `winget install --id
-  GitHub.cli -e`. If not authenticated: `gh auth login --hostname github.com
+- Check `gh auth status`. If `gh` isn't installed: `sudo apt install gh`. If not authenticated: `gh auth login --hostname github.com
   --git-protocol https --web` — this prints a one-time code + URL; relay both
   to the user and wait for them to complete it in their browser.
 - Set global `git config user.name` / `user.email` if not already configured

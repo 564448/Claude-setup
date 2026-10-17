@@ -7,30 +7,29 @@ The single index of every Claude Code skill, agent and command I use. Self-writt
 ```
 skills/
 ├── general/      → ~/.claude/skills          (user scope, every folder)
-├── cs/           → C:\Knight\.claude\skills  (project scope)
-├── project/      → C:\Knight\.claude\skills  (project scope)
+├── cs/           → <setup root>/.claude/skills  (project scope)
+├── project/      → <setup root>/.claude/skills  (project scope)
 ├── in-progress/  not linked: drafts
 └── deprecated/   not linked: retired
 ```
 
 Claude Code only loads `<skills-dir>/<name>/SKILL.md`, one level deep. After adding, moving or removing a skill, run:
 
-```powershell
-.\link-skills.ps1          # add -DryRun to preview
+```bash
+./link-skills.sh          # add --dry-run to preview
 ```
 
-It creates directory junctions (no admin rights needed), refuses duplicate names, and prunes links to skills that moved to `in-progress/` or `deprecated/`.
+It creates symlinks, refuses duplicate names, and prunes links to skills that moved to `in-progress/` or `deprecated/`.
 
 ## Index
 
-**Source** column: *own* = in this repo · *npx* = `npx skills` (in `C:\Knight\.agents\skills`, tracked by `C:\Knight\skills-lock.json`, **do not move**) · *plugin* = installed Claude Code plugin · *built-in* = ships with Claude Code.
+**Source** column: *own* = in this repo · *npx* = `npx skills` (in `<setup root>/.agents/skills`, tracked by `<setup root>/skills-lock.json`, **do not move**) · *plugin* = installed Claude Code plugin · *built-in* = ships with Claude Code.
 
 ### Own skills
 
 | Skill | Bucket | What it does |
 |---|---|---|
 | [remote-pi-min](skills/general/remote-pi-min/SKILL.md) | general | SSH/SCP into the Raspberry Pi "min" with a key, used for UAV work |
-| [remote_vm_kali](skills/general/remote_vm_kali/SKILL.md) | general | SSH/SCP into the Kali VM (key first, password fallback), used for Cyber |
 | [coding-guidelines](skills/general/coding-guidelines/SKILL.md) | general | Guidelines against common LLM coding mistakes. **Use whenever writing code.** Forked from karpathy-guidelines |
 | [upload-to-github](skills/general/upload-to-github/SKILL.md) | general | Check code, add README + .gitignore + LICENSE, then push via `gh` |
 | [root-cause-debugging](skills/general/root-cause-debugging/SKILL.md) | general | Debug loop: recite marker, reproduce, map fail path/knobs, falsify hypotheses, run ledger, one fix, stop after 3 fails |
@@ -39,20 +38,12 @@ It creates directory junctions (no admin rights needed), refuses duplicate names
 | [grill-me](skills/general/grill-me/SKILL.md) | general | `/grill-me` entry point (user-invoked only) that loads `grilling`. Forked from mattpocock/skills |
 | [skill-intake](skills/general/skill-intake/SKILL.md) | general | `/skill-intake <link or name> [method]` (user-invoked only): read an outside skill/plugin/MCP server, compare with this setup, recommend tiers, then install or fork only the chosen way |
 | [report-format-check](skills/cs/report-format-check/SKILL.md) | cs | Check an NKRAFA report `.docx` against the format spec |
-| [pcb-autoroute](skills/project/pcb-autoroute/SKILL.md) | project | Headless KiCad 8 placement → Freerouting → DRC → Gerbers |
-| [pcb-design](skills/project/pcb-design/SKILL.md) | project | Live KiCad 9 editing via kicad-mcp, plus pcb-autoroute for bulk routing |
 
-Longer notes are in each bucket's README: [general](skills/general/README.md) · [cs](skills/cs/README.md) · [project](skills/project/README.md).
+Longer notes are in each bucket's README: [general](skills/general/README.md) · [cs](skills/cs/README.md) · [project](skills/project/README.md). The ``linux`` branch leaves out remote_vm_kali, pcb-autoroute and pcb-design (Windows-only); they live on ``main``.
 
-### Own agents & commands (in `C:\Knight\.claude\`)
+### Own agents & commands
 
-| Name | Kind | What it does |
-|---|---|---|
-| `nkrafa-report-formatter` | agent | Formats a report `.docx` into NKRAFA format (structure, fonts, page numbers, Thai justification) |
-| `nkrafa-detail-checker` | agent | Read-only hunt for tiny spec deviations in a formatted NKRAFA report |
-| `/Review_NKRAFA_report` | command | Loops formatter ↔ checker until the report is fully conformant ([how they fit](skills/cs/README.md#how-the-nkrafa-tooling-fits-together)) |
-
-Agents and commands are single `.md` files. Junctions only work for folders, so these stay in `.claude/` and are listed here only.
+None on the `linux` branch. The `nkrafa-*` agents and `/Review_NKRAFA_report` need Word COM, so they live on `main` only.
 
 ### Third-party skills
 

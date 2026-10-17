@@ -5,8 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -File \"${CLAUDE_PROJECT_DIR}\\.claude\\hooks\\session-reminder.ps1\"",
-            "shell": "powershell"
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/session-reminder.py\""
           }
         ]
       }
@@ -16,8 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -File \"${CLAUDE_PROJECT_DIR}\\.claude\\hooks\\language-context.ps1\"",
-            "shell": "powershell"
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/language-context.py\""
           }
         ]
       }

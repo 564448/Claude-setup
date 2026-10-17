@@ -4,17 +4,20 @@
 !/.gitattributes
 !/CLAUDE.md
 !/README.md
-!/bootstrap.ps1
+!/bootstrap.sh
 !/skills-lock.json
 !/.agents/
 !/.claude/
 !/user-claude/
 !/Project/
 
-# .claude: junctions are recreated by bootstrap.ps1; local settings stay local
+# .claude: skill symlinks are recreated by bootstrap.sh; local settings stay local
 /.claude/skills/
 /.claude/settings.local.json
 
-# Project: only the skills repo (it has its own .gitignore for the large pcb-autoroute binaries)
+# Project: only the skills repo
 /Project/*
 !/Project/claude-skills/
+
+# Python bytecode
+__pycache__/
