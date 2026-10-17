@@ -18,7 +18,7 @@ Expected layout: Claude runs from `/home/knight/Claude` (this repo); the work fo
 ## Layout
 - CLAUDE.md, skills-lock.json, .agents/ – workspace rules and third-party skills
 - .claude/ – project settings and hooks (python3)
-- Project/claude-skills/ – self-written skills (see its README.md)
+- claude-skills/ – self-written skills (see its README.md)
 - user-claude/ – copies of ~/.claude settings, statusline and memory
 
 ## Not included

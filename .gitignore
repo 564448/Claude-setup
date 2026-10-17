@@ -9,15 +9,11 @@
 !/.agents/
 !/.claude/
 !/user-claude/
-!/Project/
+!/claude-skills/
 
 # .claude: skill symlinks are recreated by bootstrap.sh; local settings stay local
 /.claude/skills/
 /.claude/settings.local.json
-
-# Project: only the skills repo
-/Project/*
-!/Project/claude-skills/
 
 # Python bytecode
 __pycache__/

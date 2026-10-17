@@ -1,7 +1,7 @@
 # Knight Workflow Guide
 
 ## Paths
-- **Setup root**: the folder this repo is cloned to, and where Claude is run from (e.g. `/home/knight/Claude`). Holds `CLAUDE.md`, `.claude/`, `.agents/` and `Project/claude-skills/`.
+- **Setup root**: the folder this repo is cloned to, and where Claude is run from (e.g. `/home/knight/Claude`). Holds `CLAUDE.md`, `.claude/`, `.agents/` and `claude-skills/`.
 - **Work root**: the sibling folder `Knight` (e.g. `/home/knight/Knight`) holding the three work folders `ClaudeTaughtMe/`, `CS/` and `Project/`. `bootstrap.sh` adds it to `permissions.additionalDirectories`.
 
 The rules below say "setup root" and "work root"; Auto mode covers both.
@@ -34,8 +34,8 @@ Before creating or writing to any `.md` file, confirm with the user first (what 
 If an existing file or folder looks miscategorized, ambiguous, or doesn't fit any of the three categories, flag it to the user and ask how to proceed rather than moving or recategorizing it yourself.
 
 ## Claude skills, agents & commands
-All skills, agents and commands are indexed in one place: `Project/claude-skills/README.md`. The full rules are in `Project/claude-skills/CLAUDE.md`. Read that file before adding, moving or documenting a skill.
-- **Self-written skills** live in `Project/claude-skills/skills/<bucket>/<name>/`. Buckets are `general` (user scope), `cs`, `project`, `in-progress`, `deprecated`. After any change, run `Project/claude-skills/link-skills.sh`, which symlinks them into `~/.claude/skills` or `<setup root>/.claude/skills`. Edit skills in the repo, not through the `.claude/skills` symlinks.
+All skills, agents and commands are indexed in one place: `claude-skills/README.md`. The full rules are in `claude-skills/CLAUDE.md`. Read that file before adding, moving or documenting a skill.
+- **Self-written skills** live in `claude-skills/skills/<bucket>/<name>/`. Buckets are `general` (user scope), `cs`, `project`, `in-progress`, `deprecated`. After any change, run `claude-skills/link-skills.sh`, which symlinks them into `~/.claude/skills` or `<setup root>/.claude/skills`. Edit skills in the repo, not through the `.claude/skills` symlinks.
 - **Third-party skills** from `npx skills` stay in `.agents/skills` + `skills-lock.json`, and plugins stay where they are. Never move them. They only get a row in the index.
 - **Agents / commands** stay in `<setup root>/.claude/agents` and `.claude/commands`. They only get a row in the index.
 

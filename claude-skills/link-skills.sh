@@ -17,7 +17,7 @@ dry=0
 run() { if [ "$dry" = 1 ]; then echo "would $*"; else "$@"; fi; }
 
 repo=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-root=$(cd "$repo/../.." && pwd)
+root=$(cd "$repo/.." && pwd)
 
 declare -A dest=([general]="$HOME/.claude/skills" [cs]="$root/.claude/skills" [project]="$root/.claude/skills")
 declare -A src bucket

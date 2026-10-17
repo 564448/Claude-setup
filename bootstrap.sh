@@ -3,7 +3,7 @@
 # (e.g. /home/knight/Claude); the work folders are expected in a sibling folder named Knight.
 # Does not touch credentials: log in to Claude Code and gh yourself.
 #
-#   1. links the self-written skills        (Project/claude-skills/link-skills.sh)
+#   1. links the self-written skills        (claude-skills/link-skills.sh)
 #   2. links the third-party skills         (.agents/skills/* -> .claude/skills)
 #   3. copies user-claude/ into ~/.claude   (existing files are backed up as *.bak)
 #   4. lets Claude reach the work folders   (permissions.additionalDirectories)
@@ -16,7 +16,7 @@ claude_dir="$HOME/.claude"
 # Claude Code names a project's memory folder after its path, every non-alphanumeric char -> "-".
 mem="$claude_dir/projects/$(printf '%s' "$root" | sed 's/[^A-Za-z0-9]/-/g')/memory"
 
-"$root/Project/claude-skills/link-skills.sh"
+"$root/claude-skills/link-skills.sh"
 
 mkdir -p "$root/.claude/skills" "$claude_dir" "$mem"
 for s in "$root"/.agents/skills/*/; do
