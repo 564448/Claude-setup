@@ -50,3 +50,11 @@ After finishing a piece of work, give the user a brief summary covering:
 - Any problems encountered
 - How each problem was resolved
 - Before writing the summary, run the `verification-before-completion` gate and end with its **[Verified]** block.
+
+## Memory organization
+Memories in `~/.claude/projects/C--Knight/memory/` are grouped by topic:
+- A topic with several memories gets its own folder (e.g. `UAV/`) with a `README.md` that lists each file in one line. `MEMORY.md` has only one line per folder, pointing to its README.
+- When working on a topic, read its README first, then open only the files that apply.
+- A new memory on a topic goes in that topic's folder, and its README is updated in the same step (also when a file is edited or deleted).
+- A memory that applies across topics stays at the top level with its own line in `MEMORY.md`.
+- Store guidelines only. Mission details, values in code and machine-specific connection data (IP, COM) are not stored.
