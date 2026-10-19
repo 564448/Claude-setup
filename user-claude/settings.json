@@ -7,14 +7,7 @@
   "enabledPlugins": {
     "figma@claude-plugins-official": true
   },
-  "extraKnownMarketplaces": {
-    "karpathy-skills": {
-      "source": {
-        "source": "github",
-        "repo": "forrestchang/andrej-karpathy-skills"
-      }
-    }
-  },
+  "extraKnownMarketplaces": {},
   "effortLevel": "medium",
   "autoUpdatesChannel": "latest",
   "skipDangerousModePermissionPrompt": true,

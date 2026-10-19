@@ -11,7 +11,7 @@
   2. links the third-party skills         (.agents\skills\* -> .claude\skills)
   3. copies user-claude\ into ~\.claude   (existing files are backed up as *.bak, never overwritten)
   4. lets Claude reach the work folders   (permissions.additionalDirectories)
-  5. installs the plugins named in user-claude\settings.json, if the `claude` CLI is on PATH
+  5. installs the plugins enabled (true) in user-claude\settings.json, if the `claude` CLI is on PATH
 #>
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
@@ -56,7 +56,7 @@ if ($json.permissions.additionalDirectories -notcontains $work) {
 
 if (Get-Command claude -ErrorAction SilentlyContinue) {
     $settings = Get-Content "$root\user-claude\settings.json" -Raw | ConvertFrom-Json
-    foreach ($p in $settings.enabledPlugins.PSObject.Properties.Name) { claude plugin install $p }
+    foreach ($p in ($settings.enabledPlugins.PSObject.Properties | Where-Object { $_.Value -eq $true }).Name) { claude plugin install $p }
 } else {
     Write-Warning 'claude CLI not found: install Claude Code, then re-run this script to install plugins.'
 }
