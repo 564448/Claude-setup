@@ -5,7 +5,6 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "andrej-karpathy-skills@karpathy-skills": false,
     "figma@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
