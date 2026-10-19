@@ -30,8 +30,10 @@ New-Item -ItemType Directory -Force $claude, $mem | Out-Null
 $copies = @(
     @{ From = "$knight\user-claude\settings.json";           To = "$claude\settings.json" },
     @{ From = "$knight\user-claude\statusline-command.sh";   To = "$claude\statusline-command.sh" }
-) + (Get-ChildItem "$knight\user-claude\memory" -File | ForEach-Object { @{ From = $_.FullName; To = "$mem\$($_.Name)" } })
+) + (Get-ChildItem "$knight\user-claude\memory" -File -Recurse | ForEach-Object {
+    @{ From = $_.FullName; To = Join-Path $mem $_.FullName.Substring("$knight\user-claude\memory\".Length) } })
 foreach ($c in $copies) {
+    New-Item -ItemType Directory -Force (Split-Path $c.To) | Out-Null
     if ((Test-Path $c.To) -and ((Get-FileHash $c.To).Hash -ne (Get-FileHash $c.From).Hash)) {
         Copy-Item $c.To "$($c.To).bak" -Force
     }

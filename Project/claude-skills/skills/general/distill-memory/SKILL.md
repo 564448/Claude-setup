@@ -15,7 +15,7 @@ Turn what the user told you in this session into persistent memories. Every step
 
 ## Layout
 
-All memories live in this project's memory folder (`~/.claude/projects/<project slug>/memory/`; the slug is the working directory path with separators replaced by `-`, e.g. `C--Knight` on Windows or `-home-knight-claude` on Linux).
+All memories live in this project's memory folder (`~/.claude/projects/<project slug>/memory/`; the slug is the working directory path with every character that isn't a letter or digit replaced by `-`, e.g. `C--Knight` on Windows or `-home-knight-claude` on Linux).
 
 ```
 memory/
@@ -111,6 +111,7 @@ Only after confirmation:
 2. Write or update the folder `README.md`.
 3. Add or update the folder's single line in `MEMORY.md`. Don't touch other lines.
 4. Apply the chosen option for each existing memory that was touched.
+5. If the project keeps a copy of its memories in a repo (e.g. `user-claude/memory/`, restored by a bootstrap script), copy every new or changed file there too, keeping the folder layout. Tell the user the memories reach the remote only after that repo is committed and pushed.
 
 ## Step 5: Verify
 
@@ -120,5 +121,6 @@ Run the `verification-before-completion` gate:
 - Read `MEMORY.md`: one line for the folder, other lines unchanged.
 - Every `name:` is unique, and every `[[link]]` matches an existing `name:`.
 - The README lists every file in the folder.
+- If there is a repo copy (Step 4.5), `diff -r` between it and the memory folder shows no differences (line endings aside).
 
 Finish with the end-of-task summary and its **[Verified]** block. Say plainly that you can't check in this session whether a new session recalls the memories, and that the user can check by asking about the topic in a fresh session.
