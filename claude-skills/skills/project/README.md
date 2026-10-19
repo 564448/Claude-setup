@@ -1,6 +1,6 @@
 # Project skills
 
-Project scope: linked into `C:\Knight\.claude\skills`.
+Project scope: linked into `C:\Knight\Claude\.claude\skills`.
 
 - **[pcb-autoroute](./pcb-autoroute/SKILL.md)** (added 2026-09-15): generates, autoroutes and DRC-cleans a KiCad 8 PCB headlessly. The pipeline is placement generator → Specctra DSN with via fanout → Freerouting → pcbnew fill/clean/link → `kicad-cli` DRC → Gerbers. It was written after the CanSat carrier board (`Project/SPACE/Cansat/hardware2`, 4-layer, DRC 0/0). SKILL.md carries the full failure catalogue (units, mirror conventions, GND-island dead ends on 2 layers, SWIG pitfalls). Freerouting + JRE live in `tools/` (git-ignored; see `tools/README.txt`). Invoke with `/pcb-autoroute`, "route the board", or "redo the CanSat PCB".
 - **[pcb-design](./pcb-design/SKILL.md)** (added 2026-09-16): combines `kicad-mcp` for live, interactive editing in a running KiCad 9 session with `pcb-autoroute` for headless bulk routing and DRC cleanup. `kicad-mcp` is the user-scoped MCP server `kicad`, installed at `Project/tools/kicad-mcp`. It needs KiCad 9 with the IPC API server enabled and a pinned Python 3.12 `uv` env, because Python 3.14 has no `pynng` wheel yet. pcb-autoroute's KiCad-8 workarounds are not yet re-verified on KiCad 9.

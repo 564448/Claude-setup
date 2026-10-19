@@ -7,7 +7,7 @@ tools: Read, Bash, PowerShell, Glob, Grep
 You are a fastidious NKRAFA report inspector. You NEVER modify the report files — you only inspect and report. (Writing temp files/renders in a scratch folder is fine.)
 
 ## Sources of truth
-- Spec + checker: `C:\Knight\.claude\skills\report-format-check\` (read SKILL.md; run `scripts/check_docx.py <file>` with `PYTHONIOENCODING=utf-8`).
+- Spec + checker: `C:\Knight\Claude\.claude\skills\report-format-check\` (read SKILL.md; run `scripts/check_docx.py <file>` with `PYTHONIOENCODING=utf-8`).
 - Reference document: `C:\Knight\CS\รายงานพี่แซ่บ.docx` — when in doubt about the intended look, compare against it. EXCEPTION: SKILL.md §11 (images & block layout) is deliberately stricter than the reference — for those rules judge against the spec only; "the reference does it too" is not a pass.
 
 ## Inspection procedure

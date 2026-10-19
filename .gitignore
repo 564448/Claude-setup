@@ -9,12 +9,10 @@
 !/.agents/
 !/.claude/
 !/user-claude/
-!/Project/
+!/claude-skills/
 
 # .claude: junctions are recreated by bootstrap.ps1; local settings stay local
 /.claude/skills/
 /.claude/settings.local.json
 
-# Project: only the skills repo (it has its own .gitignore for the large pcb-autoroute binaries)
-/Project/*
-!/Project/claude-skills/
+# claude-skills has its own .gitignore for the large pcb-autoroute binaries

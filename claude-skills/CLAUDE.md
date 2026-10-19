@@ -1,8 +1,8 @@
 Self-written Claude Code skills live in bucket folders under `skills/`:
 
 - `general/`: useful in any folder, so it is linked into `~/.claude/skills` (user scope)
-- `cs/`: tied to coursework / an academic pipeline, linked into `C:\Knight\.claude\skills`
-- `project/`: for building a personal project, linked into `C:\Knight\.claude\skills`
+- `cs/`: tied to coursework / an academic pipeline, linked into `C:\Knight\Claude\.claude\skills`
+- `project/`: for building a personal project, linked into `C:\Knight\Claude\.claude\skills`
 - `in-progress/`: drafts, not linked
 - `deprecated/`: retired, not linked
 
@@ -16,6 +16,6 @@ Every skill in `general/`, `cs/` or `project/` must have:
 
 Skills in `in-progress/` and `deprecated/` appear only in their bucket README, never in the top-level index.
 
-Third-party skills (`npx skills` → `C:\Knight\.agents\skills` + `skills-lock.json`, or plugins), built-in skills, agents and commands are **not moved into this repo**. They only get a row in the matching table of the top-level `README.md`.
+Third-party skills (`npx skills` → `C:\Knight\Claude\.agents\skills` + `skills-lock.json`, or plugins), built-in skills, agents and commands are **not moved into this repo**. They only get a row in the matching table of the top-level `README.md`.
 
 Skill names must be unique across all buckets, because linking flattens them. `link-skills.ps1` refuses duplicates.

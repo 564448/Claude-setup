@@ -7,8 +7,8 @@ The single index of every Claude Code skill, agent and command I use. Self-writt
 ```
 skills/
 ├── general/      → ~/.claude/skills          (user scope, every folder)
-├── cs/           → C:\Knight\.claude\skills  (project scope)
-├── project/      → C:\Knight\.claude\skills  (project scope)
+├── cs/           → C:\Knight\Claude\.claude\skills  (project scope)
+├── project/      → C:\Knight\Claude\.claude\skills  (project scope)
 ├── in-progress/  not linked: drafts
 └── deprecated/   not linked: retired
 ```
@@ -23,7 +23,7 @@ It creates directory junctions (no admin rights needed), refuses duplicate names
 
 ## Index
 
-**Source** column: *own* = in this repo · *npx* = `npx skills` (in `C:\Knight\.agents\skills`, tracked by `C:\Knight\skills-lock.json`, **do not move**) · *plugin* = installed Claude Code plugin · *built-in* = ships with Claude Code.
+**Source** column: *own* = in this repo · *npx* = `npx skills` (in `C:\Knight\Claude\.agents\skills`, tracked by `C:\Knight\Claude\skills-lock.json`, **do not move**) · *plugin* = installed Claude Code plugin · *built-in* = ships with Claude Code.
 
 ### Own skills
 
@@ -45,7 +45,7 @@ It creates directory junctions (no admin rights needed), refuses duplicate names
 
 Longer notes are in each bucket's README: [general](skills/general/README.md) · [cs](skills/cs/README.md) · [project](skills/project/README.md).
 
-### Own agents & commands (in `C:\Knight\.claude\`)
+### Own agents & commands (in `C:\Knight\Claude\.claude\`)
 
 | Name | Kind | What it does |
 |---|---|---|

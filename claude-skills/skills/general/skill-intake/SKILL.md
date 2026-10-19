@@ -37,8 +37,8 @@ Mechanism step by step, and **when it runs**: on demand by the user, chosen by t
 
 ### A3. Compare with this setup
 Read before judging:
-- `C:\Knight\CLAUDE.md`
-- `C:\Knight\Project\claude-skills\README.md` (index of every skill, agent, command, plugin)
+- `C:\Knight\Claude\CLAUDE.md`
+- `C:\Knight\Claude\claude-skills\README.md` (index of every skill, agent, command, plugin)
 - every own skill that could overlap or conflict (e.g. `coding-guidelines`, `root-cause-debugging`, `verification-before-completion`)
 - `~/.claude/settings.json` (`enabledPlugins`) and the facts the target needs (`node --version`, whether the folder is a git repo, …)
 
@@ -63,14 +63,14 @@ If the user already gave an install method in the arguments, skip the question a
 
 | Case | Method |
 |---|---|
-| MIT or another license that allows modification, and the user wants to own it | Fork into `Project/claude-skills/skills/<bucket>/<name>/` |
+| MIT or another license that allows modification, and the user wants to own it | Fork into `claude-skills/skills/<bucket>/<name>/` |
 | No license | Ideas only. Write it yourself, copy no text, and say so in the file |
-| `npx skills` | Stays in `C:\Knight\.agents\skills` + `skills-lock.json`. Never move it. Index row only |
+| `npx skills` | Stays in `C:\Knight\Claude\.agents\skills` + `skills-lock.json`. Never move it. Index row only |
 | Plugin / MCP server | Install where it lives (`/plugin …`, `claude mcp add …`). Index row only |
 | Source-available (e.g. ELv2) | Use it as is. Don't fork |
 
 ### B2. Fork / write
-Follow `Project/claude-skills/CLAUDE.md`.
+Follow `claude-skills/CLAUDE.md`.
 - Bucket by purpose (`general`, `cs`, `project`). Ask if unclear. The name must be unique across all buckets.
 - Frontmatter: add `license:`. Keep `description` and `disable-model-invocation` as upstream unless the user asks otherwise.
 - First line after the frontmatter is a fork note: `> Forked <date> from [<owner>/<repo>](<url>) \`<path>\` @ <sha> (<license>, © <year> <holder>). Edit freely; this copy no longer tracks upstream.`
@@ -78,11 +78,11 @@ Follow `Project/claude-skills/CLAUDE.md`.
 - Fork every file the target depends on (e.g. `grilling` together with `grill-me`).
 
 ### B3. Register
-- One row in the matching table of `Project/claude-skills/README.md` (Own skills, or Third-party for npx/plugin).
+- One row in the matching table of `claude-skills/README.md` (Own skills, or Third-party for npx/plugin).
 - For own skills, also an entry in the bucket `README.md` with the longer notes and the fork source.
-- Run `Project/claude-skills/link-skills.ps1` and read its output.
+- Run `claude-skills/link-skills.ps1` and read its output.
 - If the fork duplicates an installed plugin, set it to `false` in `enabledPlugins` so it doesn't load twice.
-- Only add to `C:\Knight\CLAUDE.md` if the user asks. Fit it to the existing structure, and name a skill the model can invoke (not one with `disable-model-invocation: true`).
+- Only add to `C:\Knight\Claude\CLAUDE.md` if the user asks. Fit it to the existing structure, and name a skill the model can invoke (not one with `disable-model-invocation: true`).
 
 ### B4. Verify and summarize
 Run `verification-before-completion`. Typical checks:

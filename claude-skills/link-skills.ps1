@@ -8,8 +8,8 @@
   Junctions need no admin rights or Developer Mode.
 
     general/     -> ~/.claude/skills           (user scope: available in every folder)
-    cs/          -> C:\Knight\.claude\skills   (project scope: only inside C:\Knight)
-    project/     -> C:\Knight\.claude\skills
+    cs/          -> <setup root>\.claude\skills   (project scope: only inside the setup root)
+    project/     -> <setup root>\.claude\skills
     in-progress/ -> not linked
     deprecated/  -> not linked
 
@@ -23,12 +23,12 @@ param([switch]$DryRun)
 
 $ErrorActionPreference = 'Stop'
 $repo   = $PSScriptRoot
-$knight = (Resolve-Path "$repo\..\..").Path
+$root   = (Resolve-Path "$repo\..").Path
 
 $dest = @{
     'general' = Join-Path $env:USERPROFILE '.claude\skills'
-    'cs'      = Join-Path $knight '.claude\skills'
-    'project' = Join-Path $knight '.claude\skills'
+    'cs'      = Join-Path $root '.claude\skills'
+    'project' = Join-Path $root '.claude\skills'
 }
 
 function Get-JunctionTarget($path) {

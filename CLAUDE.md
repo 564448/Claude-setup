@@ -1,9 +1,15 @@
-# C:\Knight Workflow Guide
+# Knight Workflow Guide
+
+## Paths
+- **Setup root**: `C:\Knight\Claude`, the folder this repo is cloned to, and where Claude is run from. Holds `CLAUDE.md`, `.claude\`, `.agents\` and `claude-skills\`.
+- **Work root**: `C:\Knight`, the parent of the setup root, holding the three work folders `ClaudeTaughtMe\`, `CS\` and `Project\`. `bootstrap.ps1` adds it to `permissions.additionalDirectories`.
+
+The rules below say "setup root" and "work root"; Auto mode covers both.
 
 ## Behavior by permission mode
 
 - **Manual mode** (default, requires approval per action): follow all rules in this file as written — confirm before creating/writing `.md` files, ask before filing ambiguous work, etc.
-- **Auto mode** (auto-accept edits): full access to read/write any file and run any terminal command *within `C:\Knight` only*, without asking for confirmation first. Filing-location rules still apply, but no need to pause and confirm before writing `.md` files.
+- **Auto mode** (auto-accept edits): full access to read/write any file and run any terminal command *within the setup root and work root only*, without asking for confirmation first. Filing-location rules still apply, but no need to pause and confirm before writing `.md` files.
 - **Bypass-permissions mode**: full access to this pc, read/write/edit any file and run any terminal command *anywhere on this PC* and every other things that you want, without asking for confirmation first.
 
 ## How to approach a request
@@ -14,7 +20,7 @@ Before acting, decide which kind of request it is:
 
 For either kind, if the task is very complex, you may search GitHub for similar projects or ideas before designing your own solution.
 
-This is a personal workspace with three top-level folders, categorized by purpose. Store new work in the folder matching its purpose.
+The work root is a personal workspace with three top-level folders, categorized by purpose. Store new work in the folder matching its purpose.
 
 - **ClaudeTaughtMe/** — Things the user wants to learn that are *not* related to their academic studies (general knowledge, side curiosities, explanations).
 - **CS/** — Academic coursework. Organized by year level, then by subject (e.g. `CS/CS3/<subject>`).
@@ -28,15 +34,15 @@ Before creating or writing to any `.md` file, confirm with the user first (what 
 If an existing file or folder looks miscategorized, ambiguous, or doesn't fit any of the three categories, flag it to the user and ask how to proceed rather than moving or recategorizing it yourself.
 
 ## Claude skills, agents & commands
-All skills, agents and commands are indexed in one place: `Project/claude-skills/README.md`. The full rules are in `Project/claude-skills/CLAUDE.md`. Read that file before adding, moving or documenting a skill.
-- **Self-written skills** live in `Project/claude-skills/skills/<bucket>/<name>/`. Buckets are `general` (user scope), `cs`, `project`, `in-progress`, `deprecated`. After any change, run `Project/claude-skills/link-skills.ps1`, which junctions them into `~/.claude/skills` or `C:\Knight\.claude\skills`. Edit skills in the repo, not through the `.claude\skills` junctions.
+All skills, agents and commands are indexed in one place: `claude-skills/README.md`. The full rules are in `claude-skills/CLAUDE.md`. Read that file before adding, moving or documenting a skill.
+- **Self-written skills** live in `claude-skills/skills/<bucket>/<name>/`. Buckets are `general` (user scope), `cs`, `project`, `in-progress`, `deprecated`. After any change, run `claude-skills/link-skills.ps1`, which junctions them into `~/.claude/skills` or `<setup root>\.claude\skills`. Edit skills in the repo, not through the `.claude\skills` junctions.
 - **Third-party skills** from `npx skills` stay in `.agents/skills` + `skills-lock.json`, and plugins stay where they are. Never move them. They only get a row in the index.
-- **Agents / commands** stay in `C:\Knight\.claude\agents` and `.claude\commands`. They only get a row in the index.
+- **Agents / commands** stay in `<setup root>\.claude\agents` and `.claude\commands`. They only get a row in the index.
 
 If a skill doesn't clearly fit one bucket, ask rather than guessing.
 
 ## Temporary working files
-Claude creates temporary scripts, data, and intermediates in `C:\Knight\.scratchpad` to respect the permission boundary and avoid unnecessary permission prompts. This directory can be safely deleted between sessions.
+Claude creates temporary scripts, data, and intermediates in `<setup root>\.scratchpad` to respect the permission boundary and avoid unnecessary permission prompts. This directory can be safely deleted between sessions.
 
 ## End-of-task summary
 After finishing a piece of work, give the user a brief summary covering:
@@ -46,7 +52,7 @@ After finishing a piece of work, give the user a brief summary covering:
 - Before writing the summary, run the `verification-before-completion` gate and end with its **[Verified]** block.
 
 ## Memory organization
-Memories in `~/.claude/projects/C--Knight/memory/` are grouped by topic. These rules apply at all times; the full procedure is in the `distill-memory` skill (`/distill-memory`).
+Memories in this project's memory folder (`~/.claude/projects/<setup root path, every non-alphanumeric char replaced by ->/memory/`, e.g. `C--Knight-Claude`) are grouped by topic. These rules apply at all times; the full procedure is in the `distill-memory` skill (`/distill-memory`).
 - Every topic gets its own folder (e.g. `UAV/`) with a `README.md` that lists each file in one line. `MEMORY.md` has only one line per folder, pointing to its README.
 - When working on a topic, read its README first, then open only the files that apply.
 - A new memory on a topic goes in that topic's folder, and its README is updated in the same step (also when a file is edited or deleted).

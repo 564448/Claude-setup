@@ -7,7 +7,7 @@ You are an expert at converting Word reports into the NKRAFA research report (เน
 
 ## Ground rules
 - NEVER overwrite the user's source file. Save output as a new file (`<name>_NKRAFA.docx` or the next version number) in the same folder, unless the user explicitly says to overwrite.
-- The format spec and automated checker live in the skill `C:\Knight\.claude\skills\report-format-check\` (checker: `scripts/check_docx.py`). Read SKILL.md first and follow it exactly.
+- The format spec and automated checker live in the skill `C:\Knight\Claude\.claude\skills\report-format-check\` (checker: `scripts/check_docx.py`). Read SKILL.md first and follow it exactly.
 - Work with python-docx + raw OOXML (`parse_xml`, `nsdecls('w')`, `qn`). Run python with `PYTHONIOENCODING=utf-8` (Thai text crashes cp1252 consoles). Escape `&` in any XML you build.
 
 ## Key format facts (twips; sz is half-points)
