@@ -1,4 +1,4 @@
 # Memory Index
 
-- [Thai docx justification fix](thai-docx-justification-fix.md) — ZWSP word boundaries + auto-hyphenation + thaiDistribute cures stretched letters/word gaps in Thai Word reports
+- [Thai-docx](Thai-docx/README.md) — Thai Word (.docx) report justification/hyphenation fixes, e.g. NKRAFA reports (read the README first)
 - [UAV](UAV/README.md) — UAV/drone/GCS work: ways of working, pilot override, testing, SITL ports (read the README first)
