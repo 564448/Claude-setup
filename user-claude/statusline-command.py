@@ -53,6 +53,8 @@ for label, key in (("5h", "five_hour"), ("7d", "seven_day")):
     pct = get(data, "rate_limits", key, "used_percentage")
     if pct is not None:
         right.append(seg(label, pct, get(data, "rate_limits", key, "resets_at")))
+if left:
+    right.append(left)
 cwd = get(data, "workspace", "current_dir") or data.get("cwd") or os.getcwd()
 branch = None
 try:
@@ -69,7 +71,4 @@ if folder:
     right.append(f"{DIM}Directory:{RESET}{ORANGE}{BOLD}/{folder}{RESET}")
 right = f"{DIM} | {RESET}".join(right)
 
-strip = lambda s: re.sub(r"\x1b\[[0-9;]*m", "", s)
-cols = shutil.get_terminal_size((120, 20)).columns
-pad = max(2, cols - 4 - len(strip(left)) - len(strip(right)))
-print(right + " " * pad + left)
+print(right)
