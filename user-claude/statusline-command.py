@@ -53,6 +53,20 @@ for label, key in (("5h", "five_hour"), ("7d", "seven_day")):
     pct = get(data, "rate_limits", key, "used_percentage")
     if pct is not None:
         right.append(seg(label, pct, get(data, "rate_limits", key, "resets_at")))
+cwd = get(data, "workspace", "current_dir") or data.get("cwd") or os.getcwd()
+branch = None
+try:
+    branch = subprocess.run(
+        ["git", "-C", cwd, "branch", "--show-current"],
+        capture_output=True, text=True, timeout=1,
+    ).stdout.strip() or None
+except Exception:
+    pass
+if branch:
+    right.append(f"{DIM}Branch:{RESET}{ORANGE}{BOLD}{branch}{RESET}")
+folder = os.path.basename(os.path.normpath(cwd))
+if folder:
+    right.append(f"{DIM}Directory:{RESET}{ORANGE}{BOLD}/{folder}{RESET}")
 right = f"{DIM} | {RESET}".join(right)
 
 strip = lambda s: re.sub(r"\x1b\[[0-9;]*m", "", s)
