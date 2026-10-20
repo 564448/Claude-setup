@@ -65,9 +65,12 @@ export const register: Register = on => {
     }
 
     return (
-      <Box justifyContent="space-between">
-        <Box>{left as never}</Box>
-        {snap.contextPercent !== null ? meter('context', snap.contextPercent) : <Text> </Text>}
+      <Box flexDirection="column">
+        <Text dimColor>{'─'.repeat(e.props.bodyColumns)}</Text>
+        <Box justifyContent="space-between">
+          <Box>{left as never}</Box>
+          {snap.contextPercent !== null ? meter('context', snap.contextPercent) : <Text> </Text>}
+        </Box>
       </Box>
     )
   })
