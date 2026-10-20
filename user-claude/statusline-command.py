@@ -5,6 +5,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 ORANGE = "\033[38;2;217;119;87m"
 DIM = "\033[2m"
 RESET = "\033[0m"
+RED = "\033[38;2;255;60;60m"
 BAR_W = 10
 BOLD = "[1m"
 
@@ -17,14 +18,18 @@ def get(d, *keys):
     return d
 
 
-def bar(pct):
+def color(pct, limit):
+    return RED if pct >= limit else ORANGE
+
+
+def bar(pct, limit=85):
     filled = max(0, min(BAR_W, round(pct / 100 * BAR_W)))
-    return f"{ORANGE}{'█' * filled}{RESET}{DIM}{'░' * (BAR_W - filled)}{RESET}"
+    return f"{color(pct, limit)}{'█' * filled}{RESET}{DIM}{'░' * (BAR_W - filled)}{RESET}"
 
 
-def seg(label, pct, resets=None):
+def seg(label, pct, resets=None, limit=85):
     p = round(pct)
-    s = f"{DIM}{label}{RESET} {bar(pct)} {ORANGE}{BOLD}{p}%{RESET}"
+    s = f"{DIM}{label}{RESET} {bar(pct, limit)} {color(pct, limit)}{BOLD}{p}%{RESET}"
     if resets:
         t = time.strftime("%a %H:%M", time.localtime(resets))
         s += f" {DIM}(resets {t}){RESET}"
@@ -36,7 +41,7 @@ data = json.load(sys.stdin)
 left = ""
 ctx = get(data, "context_window", "used_percentage")
 if ctx is not None:
-    left = seg("context", ctx)
+    left = seg("context", ctx, limit=70)
 
 right = []
 model = get(data, "model", "display_name") or ""
