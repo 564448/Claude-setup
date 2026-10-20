@@ -31,11 +31,11 @@ $claude = Join-Path $env:USERPROFILE '.claude'
 $mem    = Join-Path $claude ('projects\' + ($root -replace '[^A-Za-z0-9]', '-') + '\memory')
 New-Item -ItemType Directory -Force $claude, $mem | Out-Null
 $copies = @(
-    @{ From = "$root\user-claude\settings.json";           To = "$claude\settings.json" }
+    @{ From = "$root\user-claude\settings.json";           To = "$claude\settings.json" },
+    @{ From = "$root\user-claude\statusline-command.sh";   To = "$claude\statusline-command.sh" },
+    @{ From = "$root\user-claude\statusline-command.py";   To = "$claude\statusline-command.py" }
 ) + (Get-ChildItem "$root\user-claude\memory" -File -Recurse | ForEach-Object {
-    @{ From = $_.FullName; To = Join-Path $mem $_.FullName.Substring("$root\user-claude\memory\".Length) } }
-) + (Get-ChildItem "$root\user-claude\mods" -File -Recurse | ForEach-Object {
-    @{ From = $_.FullName; To = Join-Path "$claude\mods" $_.FullName.Substring("$root\user-claude\mods\".Length) } })
+    @{ From = $_.FullName; To = Join-Path $mem $_.FullName.Substring("$root\user-claude\memory\".Length) } })
 foreach ($c in $copies) {
     New-Item -ItemType Directory -Force (Split-Path $c.To) | Out-Null
     if ((Test-Path $c.To) -and ((Get-FileHash $c.To).Hash -ne (Get-FileHash $c.From).Hash)) {

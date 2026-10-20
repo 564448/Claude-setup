@@ -19,11 +19,11 @@ Expected layout: Claude runs from `C:\Knight\Claude` (this repo, the setup root)
 - CLAUDE.md, skills-lock.json, .agents/ – workspace rules and third-party skills
 - .claude/ – agents, commands, hooks, project settings
 - claude-skills/ – self-written skills (see its README.md)
-- user-claude/ – copies of ~/.claude settings, mods (usage-band) and memory
+- user-claude/ – copies of ~/.claude settings, statusline and memory
 
 ## Not included
 Credentials, history, sessions, settings.local.json, the work folders (CS, Project, ClaudeTaughtMe),
 and pcb-autoroute's freerouting.jar and JRE zip (see claude-skills/skills/project/pcb-autoroute/tools/README.txt).
 
 ## Refresh the user-level copies after changing them
-Copy ~/.claude/settings.json, mods/usage-band and projects/C--Knight-Claude/memory/* into user-claude/, then commit.
+Copy ~/.claude/settings.json, statusline-command.sh, statusline-command.py and projects/C--Knight-Claude/memory/* into user-claude/, then commit.

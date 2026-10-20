@@ -6,6 +6,7 @@ ORANGE = "\033[38;2;217;119;87m"
 DIM = "\033[2m"
 RESET = "\033[0m"
 BAR_W = 10
+BOLD = "[1m"
 
 
 def get(d, *keys):
@@ -23,7 +24,7 @@ def bar(pct):
 
 def seg(label, pct, resets=None):
     p = round(pct)
-    s = f"{DIM}{label}{RESET} {bar(pct)} {ORANGE}{p}%{RESET}"
+    s = f"{DIM}{label}{RESET} {bar(pct)} {ORANGE}{BOLD}{p}%{RESET}"
     if resets:
         t = time.strftime("%a %H:%M", time.localtime(resets))
         s += f" {DIM}(resets {t}){RESET}"
@@ -42,7 +43,7 @@ model = get(data, "model", "display_name") or ""
 model = model.replace(" ", "")
 effort = get(data, "effort", "level") or get(data, "effort_level")
 if model:
-    right.append(ORANGE + model + (f"-{effort}" if effort else "") + RESET)
+    right.append(ORANGE + BOLD + model + (f"-{effort}" if effort else "") + RESET)
 for label, key in (("5h", "five_hour"), ("7d", "seven_day")):
     pct = get(data, "rate_limits", key, "used_percentage")
     if pct is not None:
