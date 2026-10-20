@@ -31,6 +31,7 @@ copy() {
 }
 copy "$root/user-claude/settings.json" "$claude_dir/settings.json"
 copy "$root/user-claude/statusline-command.sh" "$claude_dir/statusline-command.sh"
+copy "$root/user-claude/statusline-command.py" "$claude_dir/statusline-command.py"
 while IFS= read -r f; do
     rel=${f#"$root"/user-claude/memory/}
     mkdir -p "$mem/$(dirname "$rel")"

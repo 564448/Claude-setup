@@ -28,4 +28,4 @@ Expected layout: Claude runs from `/home/knight/Claude` (this repo); the work fo
 - `remote-pi-min` needs your SSH key for the Pi in `~/.ssh`.
 
 ## Refresh the user-level copies after changing them
-Copy ~/.claude/settings.json, statusline-command.sh and projects/<setup-path-with-dashes>/memory/* into user-claude/, then commit.
+Copy ~/.claude/settings.json, statusline-command.sh, statusline-command.py and projects/<setup-path-with-dashes>/memory/* into user-claude/, then commit.
