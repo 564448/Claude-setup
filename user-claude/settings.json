@@ -1,9 +1,5 @@
 {
   "model": "sonnet",
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "enabledPlugins": {
     "figma@claude-plugins-official": true
   },
@@ -16,5 +12,8 @@
   },
   "autoUpdatesChannel": "latest",
   "skipDangerousModePermissionPrompt": true,
-  "theme": "dark"
+  "theme": "dark",
+  "env": {
+    "CLAUDE_CODE_PLUGIN_DIRS": "~/.claude/mods/usage-band"
+  }
 }
