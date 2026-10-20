@@ -30,13 +30,16 @@ copy() {
     cp "$1" "$2"
 }
 copy "$root/user-claude/settings.json" "$claude_dir/settings.json"
-copy "$root/user-claude/statusline-command.sh" "$claude_dir/statusline-command.sh"
-copy "$root/user-claude/statusline-command.py" "$claude_dir/statusline-command.py"
 while IFS= read -r f; do
     rel=${f#"$root"/user-claude/memory/}
     mkdir -p "$mem/$(dirname "$rel")"
     copy "$f" "$mem/$rel"
 done < <(find "$root/user-claude/memory" -type f)
+while IFS= read -r f; do
+    rel=${f#"$root"/user-claude/mods/}
+    mkdir -p "$claude_dir/mods/$(dirname "$rel")"
+    copy "$f" "$claude_dir/mods/$rel"
+done < <(find "$root/user-claude/mods" -type f)
 
 python3 - "$claude_dir/settings.json" "$work" <<'PY'
 import json, sys
