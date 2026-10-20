@@ -41,7 +41,7 @@ data = json.load(sys.stdin)
 left = ""
 ctx = get(data, "context_window", "used_percentage")
 if ctx is not None:
-    left = seg("context", ctx, limit=70)
+    left = seg("Context", ctx, limit=70)
 
 right = []
 model = get(data, "model", "display_name") or ""
@@ -71,4 +71,7 @@ if folder:
     right.append(f"{DIM}Directory:{RESET}{ORANGE}{BOLD}/{folder}{RESET}")
 right = f"{DIM} | {RESET}".join(right)
 
-print(right)
+strip = lambda s: re.sub(r"\[[0-9;]*m", "", s)
+cols = shutil.get_terminal_size((120, 20)).columns
+lead = max(0, (cols - 4 - len(strip(right))) // 2)
+print(" " * lead + right)
