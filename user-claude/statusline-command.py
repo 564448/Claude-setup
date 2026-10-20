@@ -32,7 +32,7 @@ def seg(label, pct, resets=None, limit=85):
     s = f"{DIM}{label}{RESET} {bar(pct, limit)} {color(pct, limit)}{BOLD}{p}%{RESET}"
     if resets:
         t = time.strftime("%a %H:%M", time.localtime(resets))
-        s += f" {DIM}(resets {t}){RESET}"
+        s += f" {DIM}({t}){RESET}"
     return s
 
 
