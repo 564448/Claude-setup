@@ -1,14 +1,14 @@
-# Claude-setup (linux branch)
+# Claude-setup (Linux branch)
 
 Personal Claude Code setup for Ubuntu: CLAUDE.md, self-written skills, third-party skills,
-hooks, and user-level settings/memory. Private repo. The Windows setup is on the `main` branch.
+hooks, and user-level settings/memory. Private repo. The Windows setup is on the `Windows` branch.
 
 ## Restore on a new Ubuntu PC
 Expected layout: Claude runs from `/home/knight/Claude` (this repo); the work folders
 `TaughtMe/`, `CS/` and `Project/` sit in `/home/knight/Knight`.
 
 1. Install git, GitHub CLI (`gh`), python3 and Claude Code. Run `gh auth login`.
-2. `git clone -b linux https://github.com/564448/Claude-setup /home/knight/Claude`
+2. `git clone -b Linux https://github.com/564448/Claude-setup /home/knight/Claude`
 3. Copy your work folders into `/home/knight/Knight`. Skip `Project/claude-skills`: the skills come from this repo.
 4. `bash /home/knight/Claude/bootstrap.sh`
 5. Start Claude Code in `/home/knight/Claude` and run /login.
@@ -23,7 +23,7 @@ Expected layout: Claude runs from `/home/knight/Claude` (this repo); the work fo
 
 ## Not included
 - Credentials, history, sessions, settings.local.json, and the work folders (CS, Project, TaughtMe).
-- Windows-only tooling kept on `main`: pcb-autoroute, pcb-design, remote_vm_kali, the nkrafa-* agents and /Review_NKRAFA_report.
+- Windows-only tooling kept on `Windows`: pcb-autoroute, pcb-design, remote_vm_kali, the nkrafa-* agents and /Review_NKRAFA_report.
 - `report-format-check` is included, but its reference report (`CS/รายงานพี่แซ่บ.docx`) must be copied over with your CS folder.
 - `remote-pi-min` needs your SSH key for the Pi in `~/.ssh`.
 
