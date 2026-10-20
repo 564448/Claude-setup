@@ -32,7 +32,8 @@ $mem    = Join-Path $claude ('projects\' + ($root -replace '[^A-Za-z0-9]', '-') 
 New-Item -ItemType Directory -Force $claude, $mem | Out-Null
 $copies = @(
     @{ From = "$root\user-claude\settings.json";           To = "$claude\settings.json" },
-    @{ From = "$root\user-claude\statusline-command.sh";   To = "$claude\statusline-command.sh" }
+    @{ From = "$root\user-claude\statusline-command.sh";   To = "$claude\statusline-command.sh" },
+    @{ From = "$root\user-claude\statusline-command.py";   To = "$claude\statusline-command.py" }
 ) + (Get-ChildItem "$root\user-claude\memory" -File -Recurse | ForEach-Object {
     @{ From = $_.FullName; To = Join-Path $mem $_.FullName.Substring("$root\user-claude\memory\".Length) } })
 foreach ($c in $copies) {
