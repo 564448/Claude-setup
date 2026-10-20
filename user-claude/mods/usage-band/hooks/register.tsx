@@ -51,14 +51,14 @@ export const register: Register = on => {
           <Text dimColor>{label} </Text>
           <Text color={ORANGE}>{'█'.repeat(filled)}</Text>
           <Text dimColor>{'░'.repeat(BAR_WIDTH - filled)} </Text>
-          <Text color={ORANGE}>{Math.round(pct)}%</Text>
+          <Text color={ORANGE} bold>{Math.round(pct)}%</Text>
           <Text dimColor>{resetText(resets)}</Text>
         </Text>
       )
     }
 
     const sep = <Text dimColor> | </Text>
-    const left: unknown[] = [<Text key="model" color={ORANGE}>{model + (effort ? `-${effort}` : '')}</Text>]
+    const left: unknown[] = [<Text key="model" color={ORANGE} bold>{model + (effort ? `-${effort}` : '')}</Text>]
     for (const [kind, label] of [['five_hour', '5h'], ['seven_day', '7d']] as const) {
       const l = snap.limits.find(x => x.kind === kind)
       if (l) left.push(sep, meter(label, l.percentUsed, l.resetsAt))
