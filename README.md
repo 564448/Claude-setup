@@ -26,4 +26,4 @@ Credentials, history, sessions, settings.local.json, the work folders (CS, Proje
 and pcb-autoroute's freerouting.jar and JRE zip (see claude-skills/skills/project/pcb-autoroute/tools/README.txt).
 
 ## Refresh the user-level copies after changing them
-Copy ~/.claude/settings.json, statusline-command.sh and projects/C--Knight-Claude/memory/* into user-claude/, then commit.
+Copy ~/.claude/settings.json, statusline-command.sh, statusline-command.py and projects/C--Knight-Claude/memory/* into user-claude/, then commit.
