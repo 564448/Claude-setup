@@ -1,1 +1,0 @@
-{ "name": "usage-band", "version": "0.1.0", "description": "Model, 5h/7d limits and context usage in a band above the prompt", "types": "./types/index.d.ts" }
