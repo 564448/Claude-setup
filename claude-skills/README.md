@@ -39,6 +39,7 @@ It creates directory junctions (no admin rights needed), refuses duplicate names
 | [grill-me](skills/general/grill-me/SKILL.md) | general | `/grill-me` entry point (user-invoked only) that loads `grilling`. Forked from mattpocock/skills |
 | [skill-intake](skills/general/skill-intake/SKILL.md) | general | `/skill-intake <link or name> [method]` (user-invoked only): read an outside skill/plugin/MCP server, compare with this setup, recommend tiers, then install or fork only the chosen way |
 | [distill-memory](skills/general/distill-memory/SKILL.md) | general | `/distill-memory [topic]` (user-invoked only): distill the session's instructions into topic-folder memories, confirming each step |
+| [frontend-design](skills/general/frontend-design/SKILL.md) | general | Single entry point for front-end design: picks the lead among taste / impeccable / emil and applies 8 decisions where they conflict. Reads their files by path |
 | [report-format-check](skills/cs/report-format-check/SKILL.md) | cs | Check an NKRAFA report `.docx` against the format spec |
 | [pcb-autoroute](skills/project/pcb-autoroute/SKILL.md) | project | Headless KiCad 8 placement → Freerouting → DRC → Gerbers |
 | [pcb-design](skills/project/pcb-design/SKILL.md) | project | Live KiCad 9 editing via kicad-mcp, plus pcb-autoroute for bulk routing |
@@ -68,6 +69,9 @@ Agents and commands are single `.md` files. Junctions only work for folders, so 
 | `emil-design-eng` | npx · emilkowalski/skills | Umbrella skill for UI polish and animation advice |
 | `pick-ui-library` | npx · emilkowalski/skills | Choose a trusted UI library instead of hand-rolling one |
 | `prototype` | npx · emilkowalski/skills | Build several variants of a UI piece with a switcher |
+| `design-taste-frontend` | npx · Leonxlnx/taste-skill | Anti-slop web page / app-screen art direction: dealt palettes and directions, real-browser inspector, screenshot fix loop (MIT, v2.1.4) |
+| `impeccable` | `npx impeccable install` · pbakaus/impeccable | Front-end design: `/impeccable <command>` with 24 commands (shape, critique, audit, polish, typeset, layout, colorize, animate, live…) + detector engine. Installed project-scope, **no hooks** (Apache-2.0, v4.7.0). Hooks: `/impeccable hooks on` |
+| `impeccable-*` (4 agents) | `npx impeccable install` · pbakaus/impeccable | asset-producer, documenter, finish-reviewer, manual-edit-applier; used by impeccable commands, in `.claude\agents` |
 | `figma:*` | plugin | Figma design ↔ code, FigJam diagrams, Slides |
 
 ### Built-in skills & agents worth remembering
