@@ -23,7 +23,7 @@ Expected layout: Claude runs from `C:\Knight\Claude` (this repo, the setup root)
 
 ## Not included
 Credentials, history, sessions, settings.local.json, the work folders (CS, Project, ClaudeTaughtMe),
-and pcb-autoroute's freerouting.jar and JRE zip (see claude-skills/skills/project/pcb-autoroute/tools/README.txt).
+and pcb-design's freerouting.jar and JRE zip (see claude-skills/skills/project/pcb-design/tools/README.txt).
 
 ## Refresh the user-level copies after changing them
 Copy ~/.claude/settings.json, statusline-command.sh, statusline-command.py and projects/C--Knight-Claude/memory/* into user-claude/, then commit.

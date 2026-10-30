@@ -23,7 +23,7 @@ If no check is possible (no tool, no access, it needs a human, e.g. printing or 
 
 ## What counts as evidence
 
-**If a loaded domain skill defines its own verification standard (e.g. `pcb-autoroute` §4), that standard is the evidence.** The table below covers everything else.
+**If a loaded domain skill defines its own verification standard (e.g. `pcb-design` §5), that standard is the evidence.** The table below covers everything else.
 
 | Claim | Evidence | Not enough |
 |---|---|---|

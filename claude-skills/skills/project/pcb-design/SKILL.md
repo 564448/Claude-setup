@@ -1,40 +1,100 @@
 ---
 name: pcb-design
-description: Combined KiCad workflow — use kicad-mcp for live, interactive board inspection/editing in KiCad 9 (move parts, add traces, check nets, see changes appear instantly with undo), and the pcb-autoroute headless pipeline for bulk autorouting and DRC-cleanup (placement generator → Specctra DSN → Freerouting → pcbnew scripting → kicad-cli DRC → Gerbers). Use when asked to design, route, fix, or inspect a KiCad board. Pick the live tools for small interactive edits and inspection; pick the headless pipeline for full-board autorouting or when the GUI isn't open.
+description: Full KiCad PCB lifecycle in one skill — requirements, part selection with datasheet audit, schematic, net classes, layout brief, stackup and rules, placement, routing (live editing via kicad-mcp in KiCad 9, or the headless placement → Specctra DSN → Freerouting → pcbnew → kicad-cli DRC → Gerbers pipeline), simulation, silkscreen, release. Phases end at gates with real tool output as evidence. Use when asked to design, start, route, fix DRC, inspect, review or release a KiCad board, "route the board", "make the PCB", or redo the CanSat carrier. Encodes every failure met on the CanSat board.
+license: Own work plus MIT-licensed portions from sequoia-hope/easy_pcb (see LICENSE-easy_pcb.txt)
 ---
 
-# PCB design: live editing + headless autorouting
+# PCB design: from requirements to fab files
 
-This skill combines two things that solve different problems on the same board and are meant to be used together, not as alternatives:
+> Own material (live editing, headless pipeline, failure catalogue) plus the phase/gate workflow adapted 2026-10-30 from [sequoia-hope/easy_pcb](https://github.com/sequoia-hope/easy_pcb) `.claude/skills/pcb-design/SKILL.md` @ 95bfe5e (MIT, © 2026 Sequoia Alexander; see `LICENSE-easy_pcb.txt`). Edit freely; this copy no longer tracks upstream.
 
-- **kicad-mcp** (MCP server `kicad`, registered at user scope) — talks to a *running* KiCad 9 instance over its IPC API. Use it for anything interactive: inspecting footprints/nets/connections, nudging or rotating parts, adding a trace, refilling a zone, saving — with full undo, visible instantly in the open GUI.
-- **pcb-autoroute pipeline** (`../pcb-autoroute/`, scripts + Freerouting jar) — a headless, scripted pipeline for turning a placed board into a fully-routed, DRC-clean one. No GUI required. This is the tool for "route the whole board" or "why does DRC still show violations," not for single edits.
+The goal is a board a senior engineer would sign off on: a schematic that reads like a person drew it, a layout that follows the physics, every part checked against its datasheet, and DRC that is genuinely clean.
 
-## When to use which
+The work runs in **phases**. Each phase ends at a **gate**: a file in `design/gates/` with the phase checklist, the evidence for each item (command output, calculation, render) and the review findings. **A phase is not done until its gate file exists with real evidence.** "Done" without a gate file is a failure. Never write "passed" for a check you did not run.
+
+Use the whole lifecycle for a new board. For an existing board (inspect, fix DRC, re-route, release), enter at the matching phase, and skip phases the user did not ask for.
+
+## Before anything else
+
+1. Read `LESSONS.md` in this folder (rules the user has had to correct).
+2. Run `kicad-cli version`; read `references/kicad-tools.md`. This machine has KiCad 9.0; the headless pipeline was built on 8 (see its header).
+3. Is the project **open source** (personal boards, repo URL on silkscreen) or **work/confidential** (internal part number, nothing public)? It changes silkscreen and what may leave the machine.
+4. Look for an existing `design/` folder and gate files, and resume from the last passed gate instead of starting over.
+5. Projects live under the work root's `Project/` folder (CLAUDE.md filing rule); ask if unsure which.
+
+## Project layout
+
+```
+<project>/
+  design/
+    intent.md        phase 0     parts/        phase 1 (one audit file per part or group)
+    architecture.md  phase 1     datasheets/   the PDFs actually read
+    nets.csv         phase 3     brief.md      phase 4
+    stackup.md       phase 5     sim/          phase 8 (one folder per simulation)
+    decisions.md     running log: decision, reasoning, alternatives, date
+    gates/phaseN.md  gate checklists with evidence and review findings
+    bringup.md       phase 10
+  hw/<board>/<variant>/    the KiCad project for each board variant
+```
+
+## Phases
+
+| # | Phase | Key output | Gate | User sign-off? | Read |
+|---|-------|-----------|------|----------------|------|
+| 0 | Design intent | `intent.md` | Every requirement has a number or an explicit "don't care" | **Yes** | `intent-and-brief.md` |
+| 1 | Architecture and parts | block diagram, `parts/*.md` | Every part audited against its datasheet; calculations done; sourcing confirmed | No | `datasheet-audit.md` |
+| 2 | Schematic | schematic | ERC clean, style checks, every part cross-checked against its audit, visual review | No | `schematic-style.md` |
+| 3 | Net classification | `nets.csv` | Every net classified with a reason | Glance | `net-classes.md` |
+| 4 | Mechanical and layout brief | `brief.md` | Outline, holes, connectors, sides, layers, density, art zone decided | **Yes** | `intent-and-brief.md` |
+| 5 | Stackup and rules | `stackup.md`, rules in tool | Every net class has rules; every rule is sourced | No | `stackup-and-rules.md` |
+| 6 | Placement | placed board | Placement checks pass; visual review on render | Review render | `placement.md` |
+| 7 | Routing | routed board | `kicad-cli` DRC 0 violations / 0 unconnected, parity clean, every warning explained | No | `routing.md`, `headless-pipeline.md` |
+| 8 | Simulation and SI | `sim/` | Every triggered simulation has a result or a written waiver | No | `simulation.md` |
+| 9 | Silkscreen and art | finished silk | Zero overlaps, all connectors labeled, board identity present | Review render | `silkscreen-and-art.md` |
+| 10 | Release | fab outputs | Sync check, CPL rotation check, gerber review, final review | **Yes** | `sync-and-release.md` |
+
+All files are in `references/`; read a phase's file **when you start that phase**, not all at once. Load a domain file only when the board has that circuit: `domains/motor-drive.md`, `domains/io-protection.md` (any off-board connector), `domains/high-speed.md`.
+
+## At every gate
+
+1. Run the phase's checks and paste the actual output into the gate file.
+2. Export renders for anything visual (`kicad-cli` schematic SVG/PDF, per-layer copper, 3D).
+3. Review it independently (see `references/review-protocol.md`). **Subagent reviewers only if the user has allowed subagents**; otherwise do a separate re-derivation pass and write "not independently reviewed" in the gate file.
+4. Fix findings, or dispute them in `decisions.md`. Re-review if anything significant changed.
+5. If the phase needs user sign-off, stop and say exactly what you need decided.
+
+## Iterating
+
+Going backward is normal. When an upstream artifact changes (a part swap, a new net, a moved connector), list the downstream gates it invalidates, mark them stale in their gate files and re-run them. Never patch downstream to hide an upstream change. Experiments get their own **variant** folder under `hw/<board>/`; never overwrite a variant the user has looked at.
+
+## Which tool for which task
 
 | Task | Tool |
 |---|---|
 | "Is net X connected?" / "show me all footprints on the back" | kicad-mcp (live inspection) |
-| "Move U3 2mm left and rotate it 90°" | kicad-mcp (live edit) |
-| "Route the crystal load caps to Y1" (a couple of nets) | kicad-mcp (live edit, add_trace) |
-| "Route the whole board" / "make the PCB" / "fix DRC" | pcb-autoroute pipeline (headless, `scripts/` in that skill) |
-| Board isn't open in KiCad, or KiCad isn't running | pcb-autoroute pipeline only (kicad-mcp needs a live connection) |
+| "Move U3 2 mm left and rotate it 90°" | kicad-mcp (live edit, undoable) |
+| "Route the crystal load caps to Y1" (a few short nets) | kicad-mcp `create_track` |
+| "Route the whole board" / "make the PCB" / "fix DRC" | headless pipeline (`references/headless-pipeline.md`) |
+| KiCad isn't running, or the board isn't open in the PCB Editor | headless pipeline / `kicad-cli` only |
+| ERC, DRC, parity, exports | `kicad-cli` (always the authority) |
 
-A common flow: use kicad-mcp to place/arrange parts and eyeball the layout live, then hand off to the pcb-autoroute pipeline for bulk routing + DRC, then reopen in KiCad (kicad-mcp) to inspect the routed result and hand-fix anything DRC still flags.
+A common flow: place and arrange parts live with kicad-mcp, hand off to the pipeline for bulk routing + DRC, reopen in KiCad to inspect the result and hand-fix what DRC still flags. Setup and troubleshooting for kicad-mcp: `references/kicad-tools.md`.
 
-## kicad-mcp setup notes
+## Hard rules
 
-- Requires **KiCad 9** with the IPC API server enabled: Preferences → Plugins → KiCad API Server.
-- Registered as a user-scoped MCP server (`claude mcp add -s user kicad ...`), installed at `C:\Knight\Project\tools\kicad-mcp`, running under a pinned Python 3.12 venv (`uv run --python 3.12`) — Python 3.14 was the system default but has no prebuilt `pynng` wheel yet (would require cmake to build from source, which isn't installed).
-- Connects to KiCad's local IPC socket. On Windows the exact transport differs from the `/tmp/kicad/api.sock` path used on Linux/macOS — if the connection fails, check the KiCad API Server preference pane for the actual endpoint it's listening on.
-- Marked experimental by its authors (Netlist-Studio) — sanity-check destructive edits (deletions, whole-net rip-ups) before trusting them blindly, same as with any board edit.
-- If KiCad is restarted or you switch projects/boards, calls may briefly fail with `the provided kicad_token did not match this KiCad instance's token` (a stale auth token from a prior KiCad process). It has resolved itself on retry without needing a full Claude Code restart — just retry the call (e.g. `ping`) once or twice before assuming the connection is broken.
-- Calls also fail with `no handler available for request of type ... GetOpenDocuments` if KiCad is running but no board is actually open in the **PCB Editor window** itself (project manager alone isn't enough).
+- **`kicad-cli pcb drc --severity-all` is the only authority** on layout correctness. Never trust Freerouting's own violation count or a pcbnew connectivity check.
+- **The schematic is the only source of truth** for values, footprints, MPNs and supplier part numbers. Change it there, push to the PCB, run the sync check.
+- **No part without its datasheet opened.** If it can't be fetched, stop and ask the user to attach it. Never fill in a part's requirements from memory.
+- **No programmatic-looking schematics**: no grids of symbols, no global labels standing in for wires within a sheet, no passives detached from what they serve (`schematic-style.md`).
+- **No passives in a row.** Every passive sits with the part it serves (`placement.md`).
+- **Don't hand-route long traces by coordinates.** Power goes in pours and planes, critical nets are kept short by placement, everything else goes to the autorouter with full net-class rules. Short critical nets by hand are fine.
+- **Autorouter runs are governed** (priority, threads, heap, timeout; `routing.md`).
+- **Via counts come from calculation**, never one via on a net whose current needs more.
+- **Never suppress or waive a DRC/ERC error silently.** Every waiver goes in `decisions.md` with a reason.
+- **Zero silkscreen overlaps.** Fix colliding footprint silk with a board-local footprint edit.
+- **Log every non-obvious decision** in `decisions.md` as it happens.
+- **Check scripts mostly don't exist yet.** The sync, silk, placement, net and style "checks" in the references are done by hand or with ad hoc pcbnew/`kdump.py`/S-expression scripts until someone writes them. Say which you actually ran.
 
-## pcb-autoroute pipeline notes
+## When the user corrects you
 
-Full details, failure catalogue, and stack-up/placement rules live in `../pcb-autoroute/SKILL.md` — read that before running the pipeline. Key things carried over here:
-
-- Built and verified against **KiCad 8**. It works around KiCad-8-specific gaps (e.g. `kicad-cli --refill-zones` doesn't exist until 9.0, so it fills zones via `pcbnew.ZONE_FILLER` in `kclean.py` instead). If you're now on KiCad 9, some of those workarounds may be unnecessary or may need adjusting — this hasn't been verified on 9 yet. Treat any KiCad-9 run as a first-time trial: watch for behavior changes in the pcbnew scripting API and re-confirm the DRC/Gerber steps still work as expected.
-- `kicad-cli pcb drc --severity-all` is the *only* authority on correctness — never trust Freerouting's own violation count or a pcbnew connectivity check.
-- Scripts and Freerouting/JRE binaries live in `../pcb-autoroute/scripts/` and `../pcb-autoroute/tools/` — invoke them from there rather than copying them into this skill.
+Add the correction to `LESSONS.md` as a concrete rule (what was wrong, what to do instead) in the same turn.

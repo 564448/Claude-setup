@@ -41,8 +41,7 @@ It creates directory junctions (no admin rights needed), refuses duplicate names
 | [distill-memory](skills/general/distill-memory/SKILL.md) | general | `/distill-memory [topic]` (user-invoked only): distill the session's instructions into topic-folder memories, confirming each step |
 | [frontend-design](skills/general/frontend-design/SKILL.md) | general | Single entry point for front-end design: picks the lead among taste / impeccable / emil and applies 8 decisions where they conflict. Reads their files by path |
 | [report-format-check](skills/cs/report-format-check/SKILL.md) | cs | Check an NKRAFA report `.docx` against the format spec |
-| [pcb-autoroute](skills/project/pcb-autoroute/SKILL.md) | project | Headless KiCad 8 placement → Freerouting → DRC → Gerbers |
-| [pcb-design](skills/project/pcb-design/SKILL.md) | project | Live KiCad 9 editing via kicad-mcp, plus pcb-autoroute for bulk routing |
+| [pcb-design](skills/project/pcb-design/SKILL.md) | project | Full KiCad PCB lifecycle (requirements → parts audit → schematic → rules → placement → routing → silk → release) with phase gates; live KiCad 9 editing via kicad-mcp plus a headless pipeline (Freerouting → DRC → Gerbers). Partly adapted from sequoia-hope/easy_pcb (MIT) |
 
 Longer notes are in each bucket's README: [general](skills/general/README.md) · [cs](skills/cs/README.md) · [project](skills/project/README.md).
 

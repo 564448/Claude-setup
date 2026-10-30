@@ -15,4 +15,4 @@
 /.claude/skills/
 /.claude/settings.local.json
 
-# claude-skills has its own .gitignore for the large pcb-autoroute binaries
+# claude-skills has its own .gitignore for the large pcb-design binaries
