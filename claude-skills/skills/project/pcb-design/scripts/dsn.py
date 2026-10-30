@@ -153,11 +153,25 @@ def export():
 '''
     open(DSN, "w", encoding="utf-8").write(dsn); print("DSN written:", DSN)
 
-def run(passes=60):
+def run(passes=60, threads=None, timeout=None, heap=None):
+    """Governed Freerouting run: low priority, thread + heap cap, wall-clock budget (see references/routing.md).
+    Overrides: FR_THREADS, FR_TIMEOUT (seconds), FR_HEAP (e.g. 4g). Never raise these to 'remove' the limits unless asked."""
+    threads = int(threads or os.environ.get("FR_THREADS", 1))
+    timeout = int(timeout or os.environ.get("FR_TIMEOUT", 600))
+    heap = heap or os.environ.get("FR_HEAP", "4g")
     if os.path.exists(SES): os.remove(SES)
-    cmd = [JAVA, "-Djava.awt.headless=true", "-jar", JAR, "-de", DSN, "-do", SES, "-mp", str(passes), "-l", "en"]
-    t0 = time.time(); r = subprocess.run(cmd, capture_output=True, text=True, cwd=os.path.dirname(JAR))
+    cmd = [JAVA, f"-Xmx{heap}", "-Djava.awt.headless=true", "-jar", JAR, "-de", DSN, "-do", SES, "-mp", str(passes), "-mt", str(threads), "-l", "en"]
+    flags = subprocess.BELOW_NORMAL_PRIORITY_CLASS if os.name == "nt" else 0
+    pre = (lambda: os.nice(15)) if os.name != "nt" else None
+    print(f"freerouting: passes={passes} threads={threads} heap={heap} timeout={timeout}s priority=below-normal")
+    t0 = time.time()
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, cwd=os.path.dirname(JAR), timeout=timeout, creationflags=flags, preexec_fn=pre)
+    except subprocess.TimeoutExpired:
+        print(f"freerouting HIT THE {timeout}s BUDGET and was killed; no .ses written. Fix placement/rules/layer count before raising the limit.")
+        return False
     print(f"freerouting exit {r.returncode} in {time.time()-t0:.0f}s"); print("\n".join((r.stdout + r.stderr).splitlines()[-25:]))
+    return r.returncode == 0 and os.path.exists(SES)
 
 def parse_ses():
     import json
@@ -234,5 +248,5 @@ if __name__ == "__main__":
     import sys as _s
     a = _s.argv[1:] if len(_s.argv) > 1 else []
     export()
-    run(60)
+    if not run(60): raise SystemExit("Freerouting did not produce a .ses (budget hit or error); board not modified")
     t, v = parse_ses(); verify(t, v); write(t, v)

@@ -31,7 +31,7 @@ $p.PriorityClass = 'BelowNormal'
 if (-not $p.WaitForExit(600000)) { $p.Kill(); 'Freerouting hit the 10 min budget' }
 ```
 
-**Known gap:** `scripts/dsn.py` currently launches Freerouting with `subprocess.run` and only `-mp`: no `-mt`, no `-Xmx`, no priority, no timeout. Until that is changed, run it knowing it is ungoverned, and check for stray `java.exe` afterwards.
+`scripts/dsn.py` `run()` is already governed with these defaults: below-normal priority, `-mt 1`, `-Xmx4g`, 600 s timeout (kills the process and returns False, so nothing is imported). Override with `FR_THREADS`, `FR_HEAP`, `FR_TIMEOUT` or the `run()` arguments, and only raise them on a measured reason. The PowerShell snippet above is for running Freerouting by hand.
 
 ## Rules of thumb
 
